@@ -30,7 +30,7 @@ public class PetFoodAPIController {
     @GetMapping("/{id}")
     public ResponseEntity<PetFood> findById(@PathVariable Long id) {
         Optional<PetFood> stock = petFoodJdbcRepository.findById(id);
-        if (!stock.isPresent()) {
+        if (!stock.isEmpty()) {
             ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(stock.get());
@@ -43,7 +43,7 @@ public class PetFoodAPIController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
-        if (!petFoodJdbcRepository.findById(id).isPresent()) {
+        if (!petFoodJdbcRepository.findById(id).isEmpty()) {
             ResponseEntity.badRequest().build();
         }
         petFoodJdbcRepository.deleteById(id);
@@ -52,7 +52,7 @@ public class PetFoodAPIController {
 
     @PutMapping("/{id}")
     public ResponseEntity<List<PetFood>> update(@PathVariable Long id, @RequestBody PetFood petFood) {
-        if (!petFoodJdbcRepository.findById(id).isPresent()) {
+        if (!petFoodJdbcRepository.findById(id).isEmpty()) {
             ResponseEntity.badRequest().build();
         }
         petFoodJdbcRepository.findById(id);
