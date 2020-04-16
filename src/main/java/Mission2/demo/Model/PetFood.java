@@ -1,16 +1,20 @@
 package Mission2.demo.Model;
 
+
 import lombok.Data;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+
 @Entity
 @Data
 public class PetFood {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false) private String brand;
-    @Column(nullable = false) private String description;
-    @Column(nullable = false) private BigDecimal price;
+    private String brand;
+    private String name;
+    private String description;
+    private BigDecimal price;
 }

@@ -1,9 +1,12 @@
 package Mission2.demo.Repository;
 
 import Mission2.demo.Model.PetFood;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
+@Repository
+public interface PetFoodRepository extends JpaRepository<PetFood, Long> {
 
-public interface PetFoodRepository extends CrudRepository<PetFood, Long> {
 }
