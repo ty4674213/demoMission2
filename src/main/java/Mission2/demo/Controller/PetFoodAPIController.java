@@ -1,8 +1,12 @@
 package Mission2.demo.Controller;
 
+import Mission2.demo.Exceptions.BrandNoFoundException;
 import Mission2.demo.Model.PetFood;
 import Mission2.demo.Repository.PetFoodJdbcRepository;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
@@ -30,10 +34,22 @@ public class PetFoodAPIController {
     @GetMapping("/{id}")
     public ResponseEntity<PetFood> findById(@PathVariable Long id) {
         Optional<PetFood> stock = petFoodJdbcRepository.findById(id);
-        if (!stock.isEmpty()) {
+        if (!stock.isPresent()) {
             ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(stock.get());
+    }
+
+    //Mission 4 Exception try
+    @GetMapping("/brand/{brand}")
+    public ResponseEntity<PetFood> findByBrand(@PathVariable String brand) {
+        try {
+        PetFood stock = petFoodJdbcRepository.findByBrand(brand);
+            return ResponseEntity.ok(stock);
+        }catch(Exception e)
+        {
+            throw new BrandNoFoundException(brand);
+        }
     }
 
     @PostMapping
